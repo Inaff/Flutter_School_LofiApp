@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:lofi_application/plugin/sound_effect.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,10 +11,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late AudioPlayer audioPlayer;
-  late AudioPlayer trafficSoundPlayer;
-  late AudioPlayer peopleSoundPlayer;
   bool isPlaying = false;
-  double volume = 1.0;
+  double volume = 0.4;
   bool isMuted = false;
   double previousVolume = 1.0;
 
@@ -23,29 +22,16 @@ class _HomePageState extends State<HomePage> {
   ];
   int currentSongIndex = 0;
 
-  final String trafficSoundUrl = "https://streaming.wkar.msu.edu/wkar-jazz";
-  final String peopleSoundUrl = "https://streaming.wkar.msu.edu/wkar-jazz";
-
-  double trafficVolume = 1.0;
-  double peopleVolume = 1.0;
-
   @override
   void initState() {
     super.initState();
     audioPlayer = AudioPlayer();
-    trafficSoundPlayer = AudioPlayer();
-    peopleSoundPlayer = AudioPlayer();
-
     playRadioStream(songs[currentSongIndex]);
-    playTrafficSound();
-    playPeopleSound();
   }
 
   @override
   void dispose() {
     audioPlayer.dispose();
-    trafficSoundPlayer.dispose();
-    peopleSoundPlayer.dispose();
     super.dispose();
   }
 
@@ -103,34 +89,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void playTrafficSound() async {
-    await trafficSoundPlayer.setUrl(trafficSoundUrl);
-    trafficSoundPlayer.setVolume(trafficVolume);
-    trafficSoundPlayer.setLoopMode(LoopMode.one);
-    trafficSoundPlayer.play();
-  }
-
-  void changeTrafficVolume(double value) {
-    trafficSoundPlayer.setVolume(value);
-    setState(() {
-      trafficVolume = value;
-    });
-  }
-
-  void playPeopleSound() async {
-    await peopleSoundPlayer.setUrl(peopleSoundUrl);
-    peopleSoundPlayer.setVolume(peopleVolume);
-    peopleSoundPlayer.setLoopMode(LoopMode.one);
-    peopleSoundPlayer.play();
-  }
-
-  void changePeopleVolume(double value) {
-    peopleSoundPlayer.setVolume(value);
-    setState(() {
-      peopleVolume = value;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,14 +96,14 @@ class _HomePageState extends State<HomePage> {
         title: const Text(
           'Lofi App',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.pinkAccent,
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white10,
         elevation: 0,
       ),
-      backgroundColor: Colors.black,
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -154,43 +112,15 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(40.0),
               child: Container(
                 decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: Color.fromARGB(255, 0, 0, 0),
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(100),
+                      bottomLeft: Radius.circular(20),
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
                   image: DecorationImage(
                     image: AssetImage('assets/image/background_image.jpg'),
                     fit: BoxFit.cover,
                   ),
-                ),
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.black.withOpacity(0.5),
-                            Colors.transparent,
-                            Colors.black.withOpacity(0.5),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: Text(
-                          'Lofi Radio',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               ),
             ),
@@ -207,11 +137,11 @@ class _HomePageState extends State<HomePage> {
                       icon: isMuted
                           ? const Icon(
                               Icons.volume_off,
-                              color: Colors.white,
+                              color: Colors.pinkAccent,
                             )
                           : const Icon(
                               Icons.volume_up,
-                              color: Colors.white,
+                              color: Colors.grey,
                             ),
                       onPressed: toggleMute,
                     ),
@@ -223,14 +153,14 @@ class _HomePageState extends State<HomePage> {
                         onChanged: (value) {
                           changeVolume(value);
                         },
-                        activeColor: Colors.white,
-                        inactiveColor: Colors.grey,
+                        activeColor: Colors.pinkAccent,
+                        inactiveColor: Colors.blueGrey,
                       ),
                     ),
                     IconButton(
                       icon: const Icon(
                         Icons.skip_previous,
-                        color: Colors.white,
+                        color: Colors.grey,
                       ),
                       onPressed: playPreviousSong,
                     ),
@@ -238,11 +168,11 @@ class _HomePageState extends State<HomePage> {
                       icon: isPlaying
                           ? const Icon(
                               Icons.pause,
-                              color: Colors.white,
+                              color: Colors.grey,
                             )
                           : const Icon(
                               Icons.play_arrow,
-                              color: Colors.white,
+                              color: Colors.pinkAccent,
                             ),
                       onPressed: () {
                         if (isPlaying) {
@@ -255,61 +185,13 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                       icon: const Icon(
                         Icons.skip_next,
-                        color: Colors.white,
+                        color: Colors.grey,
                       ),
                       onPressed: playNextSong,
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Traffic Sound',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Expanded(
-                      child: Slider(
-                        value: trafficVolume,
-                        min: 0.0,
-                        max: 1.0,
-                        onChanged: (value) {
-                          changeTrafficVolume(value);
-                        },
-                        activeColor: Colors.white,
-                        inactiveColor: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'People Talking',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Expanded(
-                      child: Slider(
-                        value: peopleVolume,
-                        min: 0.0,
-                        max: 1.0,
-                        onChanged: (value) {
-                          changePeopleVolume(value);
-                        },
-                        activeColor: Colors.white,
-                        inactiveColor: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
+                const SoundEffect(),
               ],
             ),
           ),
