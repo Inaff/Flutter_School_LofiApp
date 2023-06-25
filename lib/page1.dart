@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lofi_application/plugin/sound_effect.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,7 +27,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     audioPlayer = AudioPlayer();
-    playRadioStream(songs[currentSongIndex]);
+    //Set use initState add wiget
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      playRadioStream(songs[currentSongIndex]);
+    });
   }
 
   @override
@@ -59,11 +63,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void playRadioStream(String url) async {
-    await audioPlayer.setUrl(url);
-    audioPlayer.play();
-    setState(() {
-      isPlaying = true;
-    });
+    await checkConnectivity();
   }
 
   void stopRadioStream() async {
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void playNextSong() {
+  void playNextSong() async {
     if (currentSongIndex < songs.length - 1) {
       currentSongIndex++;
       stopRadioStream();
@@ -86,6 +86,69 @@ class _HomePageState extends State<HomePage> {
       currentSongIndex--;
       stopRadioStream();
       playRadioStream(songs[currentSongIndex]);
+    }
+  }
+
+  void showLoadDialogBox(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Dialog(
+          // The background color
+          backgroundColor: Colors.white,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // The loading indicator
+                CircularProgressIndicator(),
+                SizedBox(
+                  height: 15,
+                ),
+                // Some text
+                Text('Loading...')
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  checkConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('No Internet Connection'),
+            content: const Text(
+                'Please check your internet connection and try again.'),
+            actions: [
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // ignore: use_build_context_synchronously
+      showLoadDialogBox(context);
+      await audioPlayer.setUrl(songs[currentSongIndex]);
+      audioPlayer.play();
+      Future.delayed(const Duration(seconds: 1));
+      setState(() {
+        isPlaying = true;
+        Navigator.of(context).pop();
+      });
     }
   }
 
