@@ -1,16 +1,17 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lofi_application/plugin/sound_effect.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class Jazz_Page extends StatefulWidget {
+  const Jazz_Page({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<Jazz_Page> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<Jazz_Page> {
   late AudioPlayer audioPlayer;
   bool isPlaying = false;
   double volume = 0.4;
@@ -23,12 +24,16 @@ class _HomePageState extends State<HomePage> {
   ];
   int currentSongIndex = 0;
 
+  final List<String> chennel = ["Japaness", "Tokyo"];
+  int currentChennelIndex = 0;
+
   @override
   void initState() {
     super.initState();
     audioPlayer = AudioPlayer();
     //Set use initState add wiget
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // showLoadDialogBox(context);
       playRadioStream(songs[currentSongIndex]);
     });
   }
@@ -76,6 +81,7 @@ class _HomePageState extends State<HomePage> {
   void playNextSong() async {
     if (currentSongIndex < songs.length - 1) {
       currentSongIndex++;
+      currentChennelIndex++;
       stopRadioStream();
       playRadioStream(songs[currentSongIndex]);
     }
@@ -84,6 +90,7 @@ class _HomePageState extends State<HomePage> {
   void playPreviousSong() {
     if (currentSongIndex > 0) {
       currentSongIndex--;
+      currentChennelIndex--;
       stopRadioStream();
       playRadioStream(songs[currentSongIndex]);
     }
@@ -94,21 +101,76 @@ class _HomePageState extends State<HomePage> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return const Dialog(
+        return Dialog(
           // The background color
           backgroundColor: Colors.white,
+          shape: const ContinuousRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(100),
+                  bottomLeft: Radius.circular(20),
+                  topLeft: Radius.circular(100),
+                  topRight: Radius.circular(20))),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
+            padding: const EdgeInsets.symmetric(vertical: 30),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 // The loading indicator
-                CircularProgressIndicator(),
-                SizedBox(
-                  height: 15,
+                const CircularProgressIndicator(
+                    backgroundColor: Colors.pinkAccent,
+                    color: Colors.cyanAccent),
+                const SizedBox(
+                  height: 30,
                 ),
                 // Some text
-                Text('Loading...')
+                // Text(
+                //   'LOADING',
+                //   style: TextStyle(
+                //       color: Colors.pinkAccent,
+                //       fontSize: 18,
+                //       fontWeight: FontWeight.bold),
+                // )
+                // Container(
+                //   alignment: Alignment.center,
+                //   height: 20,
+                //   width: 100,
+                //   child: AnimatedTextKit(
+                //     animatedTexts: [
+                //       FadeAnimatedText(
+                //         'LOADING',
+                //         textStyle: const TextStyle(
+                //           fontSize: 18,
+                //           fontWeight: FontWeight.bold,
+                //           color: Colors.pinkAccent,
+                //         ),
+                //         // speed: const Duration(milliseconds: 2000),
+                //       ),
+                //     ],
+                //     // totalRepeatCount: 4,
+                //     // pause: const Duration(milliseconds: 1000),
+                //     // displayFullTextOnTap: true,
+                //     // stopPauseOnTap: true,
+                //   ),
+                // )
+                DefaultTextStyle(
+                  style: const TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.pinkAccent,
+                      fontWeight: FontWeight.bold),
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      WavyAnimatedText(
+                        'LOADING',
+                      ),
+                      WavyAnimatedText('RELAX'),
+                      WavyAnimatedText('WANNA DRINK COFFEE'),
+                    ],
+                    // onTap: () {
+                    //   print("Tap Event");
+                    // },
+                    repeatForever: true,
+                  ),
+                ),
               ],
             ),
           ),
@@ -125,12 +187,21 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('No Internet Connection'),
+            title: const Text(
+              'No Internet Connection',
+              style: TextStyle(color: Colors.pinkAccent),
+            ),
             content: const Text(
                 'Please check your internet connection and try again.'),
             actions: [
               TextButton(
-                child: const Text('OK'),
+                style: const ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll(Colors.pinkAccent)),
+                child: const Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -154,13 +225,33 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    const colorizeColors = [
+      Colors.pinkAccent,
+      Colors.pink,
+      Colors.tealAccent,
+      Colors.blueAccent,
+    ];
+
+    const colorizeTextStyle =
+        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Lofi App',
-          style: TextStyle(
-            color: Colors.pinkAccent,
-            fontWeight: FontWeight.bold,
+        title: SizedBox(
+          width: 250.0,
+          child: AnimatedTextKit(
+            animatedTexts: [
+              ColorizeAnimatedText(
+                speed: Duration(seconds: 1),
+                'LOFI APP',
+                textStyle: colorizeTextStyle,
+                colors: colorizeColors,
+              ),
+            ],
+            repeatForever: true,
+            onTap: () {
+              print("Tap Event");
+            },
           ),
         ),
         backgroundColor: Colors.white10,
@@ -172,7 +263,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(40.0),
+              padding: const EdgeInsets.fromLTRB(40, 15, 40, 10),
               child: Container(
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -188,7 +279,32 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          // Text(chennel[currentChennelIndex].toString()),
+          Center(
+            child: SizedBox(
+              child: DefaultTextStyle(
+                style: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.pinkAccent,
+                ),
+                child: AnimatedTextKit(
+                  animatedTexts: [
+                    TypewriterAnimatedText(
+                      speed: const Duration(milliseconds: 200),
+                      chennel[currentChennelIndex].toString(),
+                    ),
+                    TypewriterAnimatedText(
+                      speed: const Duration(milliseconds: 200),
+                      "Streaming now:",
+                    ),
+                  ],
+                  repeatForever: true,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(

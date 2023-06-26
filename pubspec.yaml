@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   just_audio: ^0.9.34
   connectivity_plus: ^4.0.1
+  animated_text_kit: ^4.2.2
+  google_fonts: ^5.1.0
   
 
 dev_dependencies:

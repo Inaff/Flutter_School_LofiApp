@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lofi_application/page1.dart';
+import 'package:lofi_application/pages/jazz/jazz_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +23,6 @@ class MyApp extends StatelessWidget {
         //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         //   useMaterial3: true,
         // ),
-        home: const HomePage());
+        home: const Jazz_Page());
   }
 }
