@@ -92,16 +92,24 @@ class _SoundEffectState extends State<SoundEffect> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(height: 20),
+          const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              const Icon(
+                Icons.traffic,
+                color: Colors.greenAccent,
+              ),
+              const SizedBox(
+                height: 2,
+                width: 2,
+              ),
               const Expanded(
                 flex: 3,
                 child: Text(
                   'Traffic Sound',
                   style: TextStyle(
-                    color: Colors.pinkAccent,
+                    color: Colors.greenAccent,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -116,7 +124,7 @@ class _SoundEffectState extends State<SoundEffect> {
                     changeTrafficVolume(value);
                   },
                   activeColor: Colors.cyanAccent,
-                  inactiveColor: Colors.blueGrey,
+                  inactiveColor: Colors.blueGrey[50],
                 ),
               ),
             ],
@@ -124,12 +132,20 @@ class _SoundEffectState extends State<SoundEffect> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              const Icon(
+                Icons.people,
+                color: Colors.greenAccent,
+              ),
+              const SizedBox(
+                height: 2,
+                width: 2,
+              ),
               const Expanded(
                 flex: 3,
                 child: Text(
                   'People Talking',
                   style: TextStyle(
-                    color: Colors.pinkAccent,
+                    color: Colors.greenAccent,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -144,7 +160,7 @@ class _SoundEffectState extends State<SoundEffect> {
                     changePeopleVolume(value);
                   },
                   activeColor: Colors.cyanAccent,
-                  inactiveColor: Colors.blueGrey,
+                  inactiveColor: Colors.blueGrey[50],
                 ),
               ),
             ],
@@ -152,12 +168,20 @@ class _SoundEffectState extends State<SoundEffect> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              const Icon(
+                Icons.keyboard,
+                color: Colors.greenAccent,
+              ),
+              const SizedBox(
+                height: 2,
+                width: 2,
+              ),
               const Expanded(
                 flex: 3,
                 child: Text(
                   'Keyboard',
                   style: TextStyle(
-                    color: Colors.pinkAccent,
+                    color: Colors.greenAccent,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -172,14 +196,13 @@ class _SoundEffectState extends State<SoundEffect> {
                     changeKeyboardVolume(value);
                   },
                   activeColor: Colors.cyanAccent,
-                  inactiveColor: Colors.blueGrey,
+                  inactiveColor: Colors.blueGrey[50],
                 ),
               ),
             ],
           ),
           const SizedBox(
             height: 20,
-            width: 20,
           )
         ],
       ),
