@@ -258,23 +258,22 @@ class _HomePageState extends State<Jazz_Page> {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(40, 15, 40, 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 2),
-                      borderRadius: const BorderRadius.only(
-                          bottomRight: Radius.circular(100),
-                          bottomLeft: Radius.circular(20),
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20)),
-                      image: const DecorationImage(
-                        image: AssetImage('assets/image/background_image.jpg'),
-                        fit: BoxFit.cover,
-                      ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(40, 15, 40, 10),
+                child: Container(
+                  height: 300,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black, width: 2),
+                    borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(100),
+                        bottomLeft: Radius.circular(20),
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20)),
+                    image: const DecorationImage(
+                      image: AssetImage('assets/image/background_image.jpg'),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
