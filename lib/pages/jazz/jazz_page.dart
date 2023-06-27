@@ -18,6 +18,8 @@ class _HomePageState extends State<Jazz_Page> {
   bool isPlaying = false;
   double volume = 0.4;
   bool isMuted = false;
+  bool limitPrevious = false;
+  bool limitNext = false;
   double previousVolume = 1.0;
 
   final List<String> songs = [
@@ -39,6 +41,11 @@ class _HomePageState extends State<Jazz_Page> {
       // showLoadDialogBox(context);
       playRadioStream(songs[currentSongIndex]);
     });
+
+    if (currentSongIndex > 0) {
+    } else {
+      limitPrevious = true;
+    }
   }
 
   @override
@@ -87,6 +94,12 @@ class _HomePageState extends State<Jazz_Page> {
       currentChennelIndex++;
       stopRadioStream();
       playRadioStream(songs[currentSongIndex]);
+      limitPrevious = false;
+      print("currentSongIndex is: $currentSongIndex");
+      print("songs $songs");
+      if (currentSongIndex == songs.length - 1) {
+        limitNext = true;
+      }
     }
   }
 
@@ -96,6 +109,10 @@ class _HomePageState extends State<Jazz_Page> {
       currentChennelIndex--;
       stopRadioStream();
       playRadioStream(songs[currentSongIndex]);
+      limitNext = false;
+      if (currentSongIndex == 0) {
+        limitPrevious = true;
+      }
     }
   }
 
@@ -320,10 +337,15 @@ class _HomePageState extends State<Jazz_Page> {
                           ),
                         ),
                         IconButton(
-                          icon: Icon(
-                            Icons.skip_previous,
-                            color: Colors.blueGrey[50],
-                          ),
+                          icon: limitPrevious
+                              ? const Icon(
+                                  Icons.skip_previous,
+                                  color: Colors.pinkAccent,
+                                )
+                              : const Icon(
+                                  Icons.skip_previous,
+                                  color: Colors.greenAccent,
+                                ),
                           onPressed: playPreviousSong,
                         ),
                         IconButton(
@@ -345,12 +367,23 @@ class _HomePageState extends State<Jazz_Page> {
                           },
                         ),
                         IconButton(
-                          icon: Icon(
-                            Icons.skip_next,
-                            color: Colors.blueGrey[50],
-                          ),
+                          icon: limitNext
+                              ? const Icon(
+                                  Icons.skip_next,
+                                  color: Colors.pinkAccent,
+                                )
+                              : const Icon(
+                                  Icons.skip_next,
+                                  color: Colors.greenAccent,
+                                ),
                           onPressed: playNextSong,
                         ),
+                        // Icon(
+                        //   Icons.skip_next,
+                        //   color: Colors.blueGrey[50],
+                        // ),
+
+                        // onPressed: playNextSong,
                       ],
                     ),
                     const SoundEffect(),
