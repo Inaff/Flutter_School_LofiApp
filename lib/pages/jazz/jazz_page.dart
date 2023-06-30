@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:lofi_application/plugin/loading.dart';
+import 'package:lofi_application/plugin/lost_connection.dart';
 import 'package:lofi_application/plugin/sound_effect.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -78,7 +80,24 @@ class _HomePageState extends State<Jazz_Page> {
   }
 
   void playRadioStream(String url) async {
-    await checkConnectivity();
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        checkConnectivity(context);
+      });
+    } else {
+      setState(() {
+        showLoadDialogBox(context);
+      });
+
+      await audioPlayer.setUrl(songs[currentSongIndex]);
+      audioPlayer.play();
+      Future.delayed(const Duration(seconds: 1));
+      setState(() {
+        isPlaying = true;
+        Navigator.of(context).pop();
+      });
+    }
   }
 
   void stopRadioStream() async {
@@ -116,115 +135,8 @@ class _HomePageState extends State<Jazz_Page> {
     }
   }
 
-  void showLoadDialogBox(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Dialog(
-          // The background color
-          backgroundColor: Colors.white,
-          shape: const ContinuousRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(100),
-                  bottomLeft: Radius.circular(20),
-                  topLeft: Radius.circular(100),
-                  topRight: Radius.circular(20))),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // The loading indicator
-                const CircularProgressIndicator(
-                    backgroundColor: Colors.pinkAccent,
-                    color: Colors.cyanAccent),
-                const SizedBox(
-                  height: 30,
-                ),
-                DefaultTextStyle(
-                  style: const TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.pinkAccent,
-                      fontWeight: FontWeight.bold),
-                  child: AnimatedTextKit(
-                    animatedTexts: [
-                      WavyAnimatedText(
-                        'LOADING',
-                      ),
-                      WavyAnimatedText('RELAX'),
-                      WavyAnimatedText('WANNA DRINK COFFEE'),
-                    ],
-                    // onTap: () {
-                    //   print("Tap Event");
-                    // },
-                    repeatForever: true,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  checkConnectivity() async {
-    var connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
-      // ignore: use_build_context_synchronously
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text(
-              'No Internet Connection',
-              style: TextStyle(color: Colors.pinkAccent),
-            ),
-            content: const Text(
-                'Please check your internet connection and try again.'),
-            actions: [
-              TextButton(
-                style: const ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll(Colors.pinkAccent)),
-                child: const Text(
-                  'OK',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // ignore: use_build_context_synchronously
-      showLoadDialogBox(context);
-      await audioPlayer.setUrl(songs[currentSongIndex]);
-      audioPlayer.play();
-      Future.delayed(const Duration(seconds: 1));
-      setState(() {
-        isPlaying = true;
-        Navigator.of(context).pop();
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    const colorizeColors = [
-      Colors.pinkAccent,
-      Colors.pink,
-      Colors.tealAccent,
-      Colors.blueAccent,
-    ];
-
-    const colorizeTextStyle =
-        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold);
-
     return Scaffold(
       appBar: AppBar(
         title: SizedBox(
@@ -234,8 +146,14 @@ class _HomePageState extends State<Jazz_Page> {
               ColorizeAnimatedText(
                 speed: const Duration(seconds: 1),
                 'LOFI APP',
-                textStyle: colorizeTextStyle,
-                colors: colorizeColors,
+                textStyle: const TextStyle(
+                    fontSize: 20.0, fontWeight: FontWeight.bold),
+                colors: [
+                  Colors.pinkAccent,
+                  Colors.pink,
+                  Colors.tealAccent,
+                  Colors.blueAccent,
+                ],
               ),
             ],
             repeatForever: true,
@@ -258,137 +176,156 @@ class _HomePageState extends State<Jazz_Page> {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(40, 15, 40, 10),
-                child: Container(
-                  height: 300,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 2),
-                    borderRadius: const BorderRadius.only(
-                        bottomRight: Radius.circular(100),
-                        bottomLeft: Radius.circular(20),
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20)),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/image/background_image.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-              // Text(chennel[currentChennelIndex].toString()),
-              Center(
-                child: SizedBox(
-                  child: DefaultTextStyle(
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.pinkAccent,
-                    ),
-                    child: AnimatedTextKit(
-                      animatedTexts: [
-                        TypewriterAnimatedText(
-                          speed: const Duration(milliseconds: 200),
-                          chennel[currentChennelIndex].toString(),
-                        ),
-                        TypewriterAnimatedText(
-                          speed: const Duration(milliseconds: 200),
-                          "Streaming now:",
-                        ),
-                      ],
-                      repeatForever: true,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+              Expanded(
+                flex: 3,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon: isMuted
-                              ? const Icon(
-                                  Icons.volume_off,
-                                  color: Colors.pinkAccent,
-                                )
-                              : Icon(
-                                  Icons.volume_up,
-                                  color: Colors.blueGrey[50],
-                                ),
-                          onPressed: toggleMute,
-                        ),
-                        Expanded(
-                          child: Slider(
-                            value: volume,
-                            min: 0.0,
-                            max: 1.0,
-                            onChanged: (value) {
-                              changeVolume(value);
-                            },
-                            activeColor: Colors.pinkAccent,
-                            inactiveColor: Colors.blueGrey[50],
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(40, 15, 40, 10),
+                      child: Container(
+                        height: 300,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 2),
+                          borderRadius: const BorderRadius.only(
+                              bottomRight: Radius.circular(100),
+                              bottomLeft: Radius.circular(20),
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20)),
+                          image: const DecorationImage(
+                            image:
+                                AssetImage('assets/image/background_image.jpg'),
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        IconButton(
-                          icon: limitPrevious
-                              ? const Icon(
-                                  Icons.skip_previous,
-                                  color: Colors.pinkAccent,
-                                )
-                              : const Icon(
-                                  Icons.skip_previous,
-                                  color: Colors.greenAccent,
-                                ),
-                          onPressed: playPreviousSong,
-                        ),
-                        IconButton(
-                          icon: isPlaying
-                              ? Icon(
-                                  Icons.pause,
-                                  color: Colors.blueGrey[50],
-                                )
-                              : const Icon(
-                                  Icons.play_arrow,
-                                  color: Colors.pinkAccent,
-                                ),
-                          onPressed: () {
-                            if (isPlaying) {
-                              stopRadioStream();
-                            } else {
-                              playRadioStream(songs[currentSongIndex]);
-                            }
-                          },
-                        ),
-                        IconButton(
-                          icon: limitNext
-                              ? const Icon(
-                                  Icons.skip_next,
-                                  color: Colors.pinkAccent,
-                                )
-                              : const Icon(
-                                  Icons.skip_next,
-                                  color: Colors.greenAccent,
-                                ),
-                          onPressed: playNextSong,
-                        ),
-                        // Icon(
-                        //   Icons.skip_next,
-                        //   color: Colors.blueGrey[50],
-                        // ),
-
-                        // onPressed: playNextSong,
-                      ],
+                      ),
                     ),
-                    const SoundEffect(),
+                    // Text(chennel[currentChennelIndex].toString()),
+                    Center(
+                      child: SizedBox(
+                        child: DefaultTextStyle(
+                          style: const TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.pinkAccent,
+                          ),
+                          child: AnimatedTextKit(
+                            animatedTexts: [
+                              TypewriterAnimatedText(
+                                speed: const Duration(milliseconds: 200),
+                                chennel[currentChennelIndex].toString(),
+                              ),
+                              TypewriterAnimatedText(
+                                speed: const Duration(milliseconds: 200),
+                                "Streaming now:",
+                              ),
+                            ],
+                            repeatForever: true,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                icon: isMuted
+                                    ? const Icon(
+                                        Icons.volume_off,
+                                        color: Colors.pinkAccent,
+                                      )
+                                    : Icon(
+                                        Icons.volume_up,
+                                        color: Colors.blueGrey[50],
+                                      ),
+                                onPressed: toggleMute,
+                              ),
+                              Expanded(
+                                child: Slider(
+                                  value: volume,
+                                  min: 0.0,
+                                  max: 1.0,
+                                  onChanged: (value) {
+                                    changeVolume(value);
+                                  },
+                                  activeColor: Colors.pinkAccent,
+                                  inactiveColor: Colors.blueGrey[50],
+                                ),
+                              ),
+                              IconButton(
+                                icon: limitPrevious
+                                    ? const Icon(
+                                        Icons.skip_previous,
+                                        color: Colors.pinkAccent,
+                                      )
+                                    : const Icon(
+                                        Icons.skip_previous,
+                                        color: Colors.greenAccent,
+                                      ),
+                                onPressed: playPreviousSong,
+                              ),
+                              IconButton(
+                                icon: isPlaying
+                                    ? Icon(
+                                        Icons.pause,
+                                        color: Colors.blueGrey[50],
+                                      )
+                                    : const Icon(
+                                        Icons.play_arrow,
+                                        color: Colors.pinkAccent,
+                                      ),
+                                onPressed: () {
+                                  if (isPlaying) {
+                                    stopRadioStream();
+                                  } else {
+                                    playRadioStream(songs[currentSongIndex]);
+                                  }
+                                },
+                              ),
+                              IconButton(
+                                icon: limitNext
+                                    ? const Icon(
+                                        Icons.skip_next,
+                                        color: Colors.pinkAccent,
+                                      )
+                                    : const Icon(
+                                        Icons.skip_next,
+                                        color: Colors.greenAccent,
+                                      ),
+                                onPressed: playNextSong,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
+              const Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                    child: RawScrollbar(
+                      thumbVisibility: true,
+                      // thumbVisibility: true, //always show scrollbar
+                      thickness: 5, //width of scrollbar
+                      thumbColor: Colors.tealAccent,
+                      radius: Radius.circular(20), //corner radius of scrollbar
+                      scrollbarOrientation: ScrollbarOrientation
+                          .right, //which side to show scrollbar
+                      child: SingleChildScrollView(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        child: SoundEffect(),
+                      ),
+                    ),
+                  )),
             ],
           ),
         ),
@@ -396,4 +333,3 @@ class _HomePageState extends State<Jazz_Page> {
     );
   }
 }
-//saves

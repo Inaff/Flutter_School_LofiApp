@@ -34,6 +34,7 @@ class _SoundEffectState extends State<SoundEffect> {
     playTrafficSound();
     playPeopleSound();
     playKeyboardSound();
+    playRainSound();
   }
 
   @override
@@ -87,125 +88,281 @@ class _SoundEffectState extends State<SoundEffect> {
     });
   }
 
+  void playRainSound() async {
+    await keyboardSoundPlayer.setAsset(keyboardSound);
+    rainSoundPlayer.setVolume(rainVolume);
+    rainSoundPlayer.setLoopMode(LoopMode.one);
+    rainSoundPlayer.play();
+  }
+
+  void changeRainVolume(double value) {
+    keyboardSoundPlayer.setVolume(value);
+    setState(() {
+      rainVolume = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Icon(
-                Icons.traffic,
-                color: Colors.greenAccent,
-              ),
-              const SizedBox(
-                height: 2,
-                width: 2,
-              ),
-              const Expanded(
-                flex: 3,
-                child: Text(
-                  'Traffic Sound',
-                  style: TextStyle(
-                    color: Colors.greenAccent,
-                    fontWeight: FontWeight.bold,
-                  ),
+    return Column(
+      children: [
+        const SizedBox(height: 5),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Icon(
+              Icons.traffic,
+              color: Colors.greenAccent,
+            ),
+            const SizedBox(
+              height: 2,
+              width: 2,
+            ),
+            const Expanded(
+              flex: 3,
+              child: Text(
+                'Traffic Sound',
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Expanded(
-                flex: 7,
-                child: Slider(
-                  value: trafficVolume,
-                  min: 0.0,
-                  max: 1.0,
-                  onChanged: (value) {
-                    changeTrafficVolume(value);
-                  },
-                  activeColor: Colors.cyanAccent,
-                  inactiveColor: Colors.blueGrey[50],
+            ),
+            Expanded(
+              flex: 7,
+              child: Slider(
+                value: trafficVolume,
+                min: 0.0,
+                max: 1.0,
+                onChanged: (value) {
+                  changeTrafficVolume(value);
+                },
+                activeColor: Colors.cyanAccent,
+                inactiveColor: Colors.blueGrey[50],
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Icon(
+              Icons.people,
+              color: Colors.greenAccent,
+            ),
+            const SizedBox(
+              height: 2,
+              width: 2,
+            ),
+            const Expanded(
+              flex: 3,
+              child: Text(
+                'People Talking',
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Icon(
-                Icons.people,
-                color: Colors.greenAccent,
+            ),
+            Expanded(
+              flex: 7,
+              child: Slider(
+                value: peopleVolume,
+                min: 0.0,
+                max: 1.0,
+                onChanged: (value) {
+                  changePeopleVolume(value);
+                },
+                activeColor: Colors.cyanAccent,
+                inactiveColor: Colors.blueGrey[50],
               ),
-              const SizedBox(
-                height: 2,
-                width: 2,
-              ),
-              const Expanded(
-                flex: 3,
-                child: Text(
-                  'People Talking',
-                  style: TextStyle(
-                    color: Colors.greenAccent,
-                    fontWeight: FontWeight.bold,
-                  ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Icon(
+              Icons.keyboard,
+              color: Colors.greenAccent,
+            ),
+            const SizedBox(
+              height: 2,
+              width: 2,
+            ),
+            const Expanded(
+              flex: 3,
+              child: Text(
+                'Keyboard',
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Expanded(
-                flex: 7,
-                child: Slider(
-                  value: peopleVolume,
-                  min: 0.0,
-                  max: 1.0,
-                  onChanged: (value) {
-                    changePeopleVolume(value);
-                  },
-                  activeColor: Colors.cyanAccent,
-                  inactiveColor: Colors.blueGrey[50],
+            ),
+            Expanded(
+              flex: 7,
+              child: Slider(
+                value: keyboardVolume,
+                min: 0.0,
+                max: 1.0,
+                onChanged: (value) {
+                  changeKeyboardVolume(value);
+                },
+                activeColor: Colors.cyanAccent,
+                inactiveColor: Colors.blueGrey[50],
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Icon(
+              Icons.keyboard,
+              color: Colors.greenAccent,
+            ),
+            const SizedBox(
+              height: 2,
+              width: 2,
+            ),
+            const Expanded(
+              flex: 3,
+              child: Text(
+                'Rain',
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Icon(
-                Icons.keyboard,
-                color: Colors.greenAccent,
+            ),
+            Expanded(
+              flex: 7,
+              child: Slider(
+                value: rainVolume,
+                min: 0.0,
+                max: 1.0,
+                onChanged: (value) {
+                  changeKeyboardVolume(value);
+                },
+                activeColor: Colors.cyanAccent,
+                inactiveColor: Colors.blueGrey[50],
               ),
-              const SizedBox(
-                height: 2,
-                width: 2,
-              ),
-              const Expanded(
-                flex: 3,
-                child: Text(
-                  'Keyboard',
-                  style: TextStyle(
-                    color: Colors.greenAccent,
-                    fontWeight: FontWeight.bold,
-                  ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Icon(
+              Icons.keyboard,
+              color: Colors.greenAccent,
+            ),
+            const SizedBox(
+              height: 2,
+              width: 2,
+            ),
+            const Expanded(
+              flex: 3,
+              child: Text(
+                'Rain',
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Expanded(
-                flex: 7,
-                child: Slider(
-                  value: keyboardVolume,
-                  min: 0.0,
-                  max: 1.0,
-                  onChanged: (value) {
-                    changeKeyboardVolume(value);
-                  },
-                  activeColor: Colors.cyanAccent,
-                  inactiveColor: Colors.blueGrey[50],
+            ),
+            Expanded(
+              flex: 7,
+              child: Slider(
+                value: rainVolume,
+                min: 0.0,
+                max: 1.0,
+                onChanged: (value) {
+                  changeKeyboardVolume(value);
+                },
+                activeColor: Colors.cyanAccent,
+                inactiveColor: Colors.blueGrey[50],
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Icon(
+              Icons.keyboard,
+              color: Colors.greenAccent,
+            ),
+            const SizedBox(
+              height: 2,
+              width: 2,
+            ),
+            const Expanded(
+              flex: 3,
+              child: Text(
+                'Rain',
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          )
-        ],
-      ),
+            ),
+            Expanded(
+              flex: 7,
+              child: Slider(
+                value: rainVolume,
+                min: 0.0,
+                max: 1.0,
+                onChanged: (value) {
+                  changeKeyboardVolume(value);
+                },
+                activeColor: Colors.cyanAccent,
+                inactiveColor: Colors.blueGrey[50],
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Icon(
+              Icons.keyboard,
+              color: Colors.greenAccent,
+            ),
+            const SizedBox(
+              height: 2,
+              width: 2,
+            ),
+            const Expanded(
+              flex: 3,
+              child: Text(
+                'Rain',
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 7,
+              child: Slider(
+                value: rainVolume,
+                min: 0.0,
+                max: 1.0,
+                onChanged: (value) {
+                  changeKeyboardVolume(value);
+                },
+                activeColor: Colors.cyanAccent,
+                inactiveColor: Colors.blueGrey[50],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        )
+      ],
     );
   }
 }
