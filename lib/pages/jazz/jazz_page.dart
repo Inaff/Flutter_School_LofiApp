@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:lofi_application/plugin/loading.dart';
-import 'package:lofi_application/plugin/lost_connection.dart';
-import 'package:lofi_application/plugin/sound_effect.dart';
+import 'package:lofi_application/others/loading.dart';
+import 'package:lofi_application/others/lost_connection.dart';
+import 'package:lofi_application/others/sound_effect.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class Jazz_Page extends StatefulWidget {
@@ -169,7 +169,7 @@ class _HomePageState extends State<Jazz_Page> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/image/background_image.jpg'),
+            image: AssetImage('assets/images/Jazz_Background.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -182,134 +182,143 @@ class _HomePageState extends State<Jazz_Page> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(40, 15, 40, 10),
-                      child: Container(
-                        height: 300,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 2),
-                          borderRadius: const BorderRadius.only(
-                              bottomRight: Radius.circular(100),
-                              bottomLeft: Radius.circular(20),
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20)),
-                          image: const DecorationImage(
-                            image:
-                                AssetImage('assets/image/background_image.jpg'),
-                            fit: BoxFit.cover,
+                    Expanded(
+                      flex: 10,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(40, 15, 40, 10),
+                        child: Container(
+                          // height: 300,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black, width: 2),
+                            borderRadius: const BorderRadius.only(
+                                bottomRight: Radius.circular(100),
+                                bottomLeft: Radius.circular(20),
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20)),
+                            image: const DecorationImage(
+                              image: AssetImage(
+                                  'assets/images/Jazz_Background.jpg'),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
                     ),
                     // Text(chennel[currentChennelIndex].toString()),
-                    Center(
-                      child: SizedBox(
-                        child: DefaultTextStyle(
-                          style: const TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.pinkAccent,
-                          ),
-                          child: AnimatedTextKit(
-                            animatedTexts: [
-                              TypewriterAnimatedText(
-                                speed: const Duration(milliseconds: 200),
-                                chennel[currentChennelIndex].toString(),
-                              ),
-                              TypewriterAnimatedText(
-                                speed: const Duration(milliseconds: 200),
-                                "Streaming now:",
-                              ),
-                            ],
-                            repeatForever: true,
+                    Expanded(
+                      flex: 1,
+                      child: Center(
+                        child: SizedBox(
+                          child: DefaultTextStyle(
+                            style: const TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.pinkAccent,
+                            ),
+                            child: AnimatedTextKit(
+                              animatedTexts: [
+                                TypewriterAnimatedText(
+                                  speed: const Duration(milliseconds: 200),
+                                  chennel[currentChennelIndex].toString(),
+                                ),
+                                TypewriterAnimatedText(
+                                  speed: const Duration(milliseconds: 200),
+                                  "Streaming now:",
+                                ),
+                              ],
+                              repeatForever: true,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                icon: isMuted
-                                    ? const Icon(
-                                        Icons.volume_off,
-                                        color: Colors.pinkAccent,
-                                      )
-                                    : Icon(
-                                        Icons.volume_up,
-                                        color: Colors.blueGrey[50],
-                                      ),
-                                onPressed: toggleMute,
-                              ),
-                              Expanded(
-                                child: Slider(
-                                  value: volume,
-                                  min: 0.0,
-                                  max: 1.0,
-                                  onChanged: (value) {
-                                    changeVolume(value);
-                                  },
-                                  activeColor: Colors.pinkAccent,
-                                  inactiveColor: Colors.blueGrey[50],
+
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  icon: isMuted
+                                      ? const Icon(
+                                          Icons.volume_off,
+                                          color: Colors.pinkAccent,
+                                        )
+                                      : Icon(
+                                          Icons.volume_up,
+                                          color: Colors.blueGrey[50],
+                                        ),
+                                  onPressed: toggleMute,
                                 ),
-                              ),
-                              IconButton(
-                                icon: limitPrevious
-                                    ? const Icon(
-                                        Icons.skip_previous,
-                                        color: Colors.pinkAccent,
-                                      )
-                                    : const Icon(
-                                        Icons.skip_previous,
-                                        color: Colors.greenAccent,
-                                      ),
-                                onPressed: playPreviousSong,
-                              ),
-                              IconButton(
-                                icon: isPlaying
-                                    ? Icon(
-                                        Icons.pause,
-                                        color: Colors.blueGrey[50],
-                                      )
-                                    : const Icon(
-                                        Icons.play_arrow,
-                                        color: Colors.pinkAccent,
-                                      ),
-                                onPressed: () {
-                                  if (isPlaying) {
-                                    stopRadioStream();
-                                  } else {
-                                    playRadioStream(songs[currentSongIndex]);
-                                  }
-                                },
-                              ),
-                              IconButton(
-                                icon: limitNext
-                                    ? const Icon(
-                                        Icons.skip_next,
-                                        color: Colors.pinkAccent,
-                                      )
-                                    : const Icon(
-                                        Icons.skip_next,
-                                        color: Colors.greenAccent,
-                                      ),
-                                onPressed: playNextSong,
-                              ),
-                            ],
-                          ),
-                        ],
+                                Expanded(
+                                  child: Slider(
+                                    value: volume,
+                                    min: 0.0,
+                                    max: 1.0,
+                                    onChanged: (value) {
+                                      changeVolume(value);
+                                    },
+                                    activeColor: Colors.pinkAccent,
+                                    inactiveColor: Colors.blueGrey[50],
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: limitPrevious
+                                      ? const Icon(
+                                          Icons.skip_previous,
+                                          color: Colors.pinkAccent,
+                                        )
+                                      : const Icon(
+                                          Icons.skip_previous,
+                                          color: Colors.greenAccent,
+                                        ),
+                                  onPressed: playPreviousSong,
+                                ),
+                                IconButton(
+                                  icon: isPlaying
+                                      ? Icon(
+                                          Icons.pause,
+                                          color: Colors.blueGrey[50],
+                                        )
+                                      : const Icon(
+                                          Icons.play_arrow,
+                                          color: Colors.pinkAccent,
+                                        ),
+                                  onPressed: () {
+                                    if (isPlaying) {
+                                      stopRadioStream();
+                                    } else {
+                                      playRadioStream(songs[currentSongIndex]);
+                                    }
+                                  },
+                                ),
+                                IconButton(
+                                  icon: limitNext
+                                      ? const Icon(
+                                          Icons.skip_next,
+                                          color: Colors.pinkAccent,
+                                        )
+                                      : const Icon(
+                                          Icons.skip_next,
+                                          color: Colors.greenAccent,
+                                        ),
+                                  onPressed: playNextSong,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
               const Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
                     child: RawScrollbar(

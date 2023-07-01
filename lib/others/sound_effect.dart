@@ -89,14 +89,14 @@ class _SoundEffectState extends State<SoundEffect> {
   }
 
   void playRainSound() async {
-    await keyboardSoundPlayer.setAsset(keyboardSound);
+    await rainSoundPlayer.setAsset(rainSound);
     rainSoundPlayer.setVolume(rainVolume);
     rainSoundPlayer.setLoopMode(LoopMode.one);
     rainSoundPlayer.play();
   }
 
   void changeRainVolume(double value) {
-    keyboardSoundPlayer.setVolume(value);
+    rainSoundPlayer.setVolume(value);
     setState(() {
       rainVolume = value;
     });
@@ -219,7 +219,7 @@ class _SoundEffectState extends State<SoundEffect> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Icon(
-              Icons.keyboard,
+              Icons.umbrella,
               color: Colors.greenAccent,
             ),
             const SizedBox(
@@ -243,115 +243,7 @@ class _SoundEffectState extends State<SoundEffect> {
                 min: 0.0,
                 max: 1.0,
                 onChanged: (value) {
-                  changeKeyboardVolume(value);
-                },
-                activeColor: Colors.cyanAccent,
-                inactiveColor: Colors.blueGrey[50],
-              ),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Icon(
-              Icons.keyboard,
-              color: Colors.greenAccent,
-            ),
-            const SizedBox(
-              height: 2,
-              width: 2,
-            ),
-            const Expanded(
-              flex: 3,
-              child: Text(
-                'Rain',
-                style: TextStyle(
-                  color: Colors.greenAccent,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 7,
-              child: Slider(
-                value: rainVolume,
-                min: 0.0,
-                max: 1.0,
-                onChanged: (value) {
-                  changeKeyboardVolume(value);
-                },
-                activeColor: Colors.cyanAccent,
-                inactiveColor: Colors.blueGrey[50],
-              ),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Icon(
-              Icons.keyboard,
-              color: Colors.greenAccent,
-            ),
-            const SizedBox(
-              height: 2,
-              width: 2,
-            ),
-            const Expanded(
-              flex: 3,
-              child: Text(
-                'Rain',
-                style: TextStyle(
-                  color: Colors.greenAccent,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 7,
-              child: Slider(
-                value: rainVolume,
-                min: 0.0,
-                max: 1.0,
-                onChanged: (value) {
-                  changeKeyboardVolume(value);
-                },
-                activeColor: Colors.cyanAccent,
-                inactiveColor: Colors.blueGrey[50],
-              ),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Icon(
-              Icons.keyboard,
-              color: Colors.greenAccent,
-            ),
-            const SizedBox(
-              height: 2,
-              width: 2,
-            ),
-            const Expanded(
-              flex: 3,
-              child: Text(
-                'Rain',
-                style: TextStyle(
-                  color: Colors.greenAccent,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 7,
-              child: Slider(
-                value: rainVolume,
-                min: 0.0,
-                max: 1.0,
-                onChanged: (value) {
-                  changeKeyboardVolume(value);
+                  changeRainVolume(value);
                 },
                 activeColor: Colors.cyanAccent,
                 inactiveColor: Colors.blueGrey[50],

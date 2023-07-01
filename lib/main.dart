@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lofi_application/pages/jazz/jazz_page.dart';
+import 'package:lofi_application/pages/home/intro_screen_onboard.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -8,6 +8,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  // const MyApp({required Key key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -23,6 +25,6 @@ class MyApp extends StatelessWidget {
         //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         //   useMaterial3: true,
         // ),
-        home: const Jazz_Page());
+        home: IntroScreenOnborad());
   }
 }
