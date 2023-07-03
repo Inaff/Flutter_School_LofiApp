@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intro_screen_onboarding_flutter/intro_app.dart';
+import 'package:lofi_application/pages/home/song_select_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:lofi_application/pages/jazz/jazz_page.dart';
 
 class IntroScreenOnborad extends StatefulWidget {
   @override
@@ -46,34 +46,42 @@ class _IntroScreenOnboradState extends State<IntroScreenOnborad> {
     ),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    getSkipIntroFlag().then((skipIntro) {
-      if (skipIntro) {
-        // Skip intro and navigate to the main page
-        navigateToMainPage();
-      }
-    });
-  }
-
-  void navigateToMainPage() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const Jazz_Page(),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget onborading(BuildContext context) {
     return IntroScreenOnboarding(
       introductionList: list,
       onTapSkipButton: () {
         setSkipIntroFlag().then((_) {
           navigateToMainPage();
         });
+      },
+    );
+  }
+
+  void navigateToMainPage() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SongSelectPage(),
+        ),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: getSkipIntroFlag(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data!) {
+            navigateToMainPage();
+            return Container(); // Or any other widget if needed
+          } else {
+            return onborading(context);
+          }
+        }
+        return Container(); // Placeholder widget while waiting for data
       },
     );
   }
