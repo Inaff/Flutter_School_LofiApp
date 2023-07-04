@@ -72,6 +72,10 @@ flutter:
       - assets/music/traffic.mp3
       - assets/music/keyboard.mp3
       - assets/music/rain.mp3
+      - assets/gifs/onborad1.gif
+      - assets/gifs/onborad2.gif
+      - assets/gifs/onborad3.gif
+      - assets/gifs/onborad4.gif
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

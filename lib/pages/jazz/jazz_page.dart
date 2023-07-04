@@ -139,6 +139,7 @@ class _HomePageState extends State<Jazz_Page> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.pinkAccent),
         title: SizedBox(
           width: 250.0,
           child: AnimatedTextKit(
@@ -157,12 +158,9 @@ class _HomePageState extends State<Jazz_Page> {
               ),
             ],
             repeatForever: true,
-            onTap: () {
-              print("Tap Event");
-            },
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        backgroundColor: Colors.white,
         elevation: 30,
       ),
       backgroundColor: Colors.transparent,
@@ -189,7 +187,8 @@ class _HomePageState extends State<Jazz_Page> {
                         child: Container(
                           // height: 300,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 2),
+                            border:
+                                Border.all(color: Colors.pinkAccent, width: 2),
                             borderRadius: const BorderRadius.only(
                                 bottomRight: Radius.circular(100),
                                 bottomLeft: Radius.circular(20),
