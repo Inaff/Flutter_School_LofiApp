@@ -187,11 +187,11 @@ class _SongSelectPageState extends State<SongSelectPage> {
                                   fontSize: 25,
                                   color: Colors.black),
                               children: const [
-                                TextSpan(text: 'J'),
+                                TextSpan(text: 'Sl'),
                                 TextSpan(
-                                    text: 'a',
+                                    text: 'ee',
                                     style: TextStyle(color: Colors.pinkAccent)),
-                                TextSpan(text: 'zz'),
+                                TextSpan(text: 'py'),
                               ],
                             ),
                           ),
@@ -227,11 +227,11 @@ class _SongSelectPageState extends State<SongSelectPage> {
                                   fontSize: 25,
                                   color: Colors.black),
                               children: const [
-                                TextSpan(text: 'L'),
+                                TextSpan(text: 'Ch'),
                                 TextSpan(
-                                    text: 'o',
+                                    text: 'il',
                                     style: TextStyle(color: Colors.pinkAccent)),
-                                TextSpan(text: 'fi'),
+                                TextSpan(text: 'l'),
                               ],
                             ),
                           ),
@@ -281,11 +281,11 @@ class _SongSelectPageState extends State<SongSelectPage> {
                                   fontSize: 25,
                                   color: Colors.black),
                               children: const [
-                                TextSpan(text: 'J'),
+                                TextSpan(text: 'F'),
                                 TextSpan(
-                                    text: 'a',
+                                    text: 'un',
                                     style: TextStyle(color: Colors.pinkAccent)),
-                                TextSpan(text: 'zz'),
+                                TextSpan(text: 'k'),
                               ],
                             ),
                           ),
@@ -321,11 +321,14 @@ class _SongSelectPageState extends State<SongSelectPage> {
                                   fontSize: 25,
                                   color: Colors.black),
                               children: const [
-                                TextSpan(text: 'L'),
+                                TextSpan(text: 'C'),
                                 TextSpan(
-                                    text: 'o',
+                                    text: 'l',
                                     style: TextStyle(color: Colors.pinkAccent)),
-                                TextSpan(text: 'fi'),
+                                TextSpan(text: 'ass'),
+                                TextSpan(
+                                    text: 'ic',
+                                    style: TextStyle(color: Colors.pinkAccent)),
                               ],
                             ),
                           ),
