@@ -2,7 +2,7 @@
     package="com.example.lofi_application">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="lofi_application"
+        android:label="LOFI APP"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

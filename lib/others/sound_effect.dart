@@ -106,150 +106,265 @@ class _SoundEffectState extends State<SoundEffect> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 5),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Icon(
-              Icons.traffic,
-              color: Colors.greenAccent,
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 10, 5),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
+            decoration: const BoxDecoration(
+              color: Colors.pinkAccent,
+              borderRadius: BorderRadius.all(
+                Radius.circular(25),
+              ),
             ),
-            const SizedBox(
-              height: 2,
-              width: 2,
-            ),
-            const Expanded(
-              flex: 3,
-              child: Text(
-                'Traffic Sound',
-                style: TextStyle(
-                  color: Colors.greenAccent,
-                  fontWeight: FontWeight.bold,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    child: const Row(
+                      children: [
+                        SizedBox(
+                          height: 3,
+                          width: 3,
+                        ),
+                        Icon(
+                          Icons.traffic,
+                          color: Colors.pinkAccent,
+                        ),
+                        SizedBox(
+                          height: 2,
+                          width: 2,
+                        ),
+                        Text(
+                          'Traffic Driving',
+                          style: TextStyle(
+                            color: Colors.pinkAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(
+                  flex: 6,
+                  child: Slider(
+                    value: trafficVolume,
+                    min: 0.0,
+                    max: 1.0,
+                    onChanged: (value) {
+                      changeTrafficVolume(value);
+                    },
+                    activeColor: Colors.white,
+                    inactiveColor: Colors.white30,
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              flex: 7,
-              child: Slider(
-                value: trafficVolume,
-                min: 0.0,
-                max: 1.0,
-                onChanged: (value) {
-                  changeTrafficVolume(value);
-                },
-                activeColor: Colors.cyanAccent,
-                inactiveColor: Colors.blueGrey[50],
-              ),
-            ),
-          ],
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Icon(
-              Icons.people,
-              color: Colors.greenAccent,
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 10, 5),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
+            decoration: const BoxDecoration(
+              color: Colors.pinkAccent,
+              borderRadius: BorderRadius.all(
+                Radius.circular(25),
+              ),
             ),
-            const SizedBox(
-              height: 2,
-              width: 2,
-            ),
-            const Expanded(
-              flex: 3,
-              child: Text(
-                'People Talking',
-                style: TextStyle(
-                  color: Colors.greenAccent,
-                  fontWeight: FontWeight.bold,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    child: const Row(
+                      children: [
+                        SizedBox(
+                          height: 3,
+                          width: 3,
+                        ),
+                        Icon(
+                          Icons.people_alt,
+                          color: Colors.pinkAccent,
+                        ),
+                        SizedBox(
+                          height: 2,
+                          width: 2,
+                        ),
+                        Text(
+                          'People Talking',
+                          style: TextStyle(
+                            color: Colors.pinkAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(
+                  flex: 6,
+                  child: Slider(
+                    value: peopleVolume,
+                    min: 0.0,
+                    max: 1.0,
+                    onChanged: (value) {
+                      changePeopleVolume(value);
+                    },
+                    activeColor: Colors.white,
+                    inactiveColor: Colors.white30,
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              flex: 7,
-              child: Slider(
-                value: peopleVolume,
-                min: 0.0,
-                max: 1.0,
-                onChanged: (value) {
-                  changePeopleVolume(value);
-                },
-                activeColor: Colors.cyanAccent,
-                inactiveColor: Colors.blueGrey[50],
-              ),
-            ),
-          ],
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Icon(
-              Icons.keyboard,
-              color: Colors.greenAccent,
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 10, 5),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
+            decoration: const BoxDecoration(
+              color: Colors.pinkAccent,
+              borderRadius: BorderRadius.all(
+                Radius.circular(25),
+              ),
             ),
-            const SizedBox(
-              height: 2,
-              width: 2,
-            ),
-            const Expanded(
-              flex: 3,
-              child: Text(
-                'Keyboard',
-                style: TextStyle(
-                  color: Colors.greenAccent,
-                  fontWeight: FontWeight.bold,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    child: const Row(
+                      children: [
+                        SizedBox(
+                          height: 3,
+                          width: 3,
+                        ),
+                        Icon(
+                          Icons.keyboard,
+                          color: Colors.pinkAccent,
+                        ),
+                        SizedBox(
+                          height: 2,
+                          width: 2,
+                        ),
+                        Text(
+                          'Keyboard',
+                          style: TextStyle(
+                            color: Colors.pinkAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(
+                  flex: 6,
+                  child: Slider(
+                    value: keyboardVolume,
+                    min: 0.0,
+                    max: 1.0,
+                    onChanged: (value) {
+                      changeKeyboardVolume(value);
+                    },
+                    activeColor: Colors.white,
+                    inactiveColor: Colors.white30,
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              flex: 7,
-              child: Slider(
-                value: keyboardVolume,
-                min: 0.0,
-                max: 1.0,
-                onChanged: (value) {
-                  changeKeyboardVolume(value);
-                },
-                activeColor: Colors.cyanAccent,
-                inactiveColor: Colors.blueGrey[50],
-              ),
-            ),
-          ],
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Icon(
-              Icons.umbrella,
-              color: Colors.greenAccent,
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 10, 5),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
+            decoration: const BoxDecoration(
+              color: Colors.pinkAccent,
+              borderRadius: BorderRadius.all(
+                Radius.circular(25),
+              ),
             ),
-            const SizedBox(
-              height: 2,
-              width: 2,
-            ),
-            const Expanded(
-              flex: 3,
-              child: Text(
-                'Rain',
-                style: TextStyle(
-                  color: Colors.greenAccent,
-                  fontWeight: FontWeight.bold,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    child: const Row(
+                      children: [
+                        SizedBox(
+                          height: 3,
+                          width: 3,
+                        ),
+                        Icon(
+                          Icons.umbrella,
+                          color: Colors.pinkAccent,
+                        ),
+                        SizedBox(
+                          height: 2,
+                          width: 2,
+                        ),
+                        Text(
+                          'Rain',
+                          style: TextStyle(
+                            color: Colors.pinkAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(
+                  flex: 6,
+                  child: Slider(
+                    value: rainVolume,
+                    min: 0.0,
+                    max: 1.0,
+                    onChanged: (value) {
+                      changeRainVolume(value);
+                    },
+                    activeColor: Colors.white,
+                    inactiveColor: Colors.white30,
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              flex: 7,
-              child: Slider(
-                value: rainVolume,
-                min: 0.0,
-                max: 1.0,
-                onChanged: (value) {
-                  changeRainVolume(value);
-                },
-                activeColor: Colors.cyanAccent,
-                inactiveColor: Colors.blueGrey[50],
-              ),
-            ),
-          ],
+          ),
         ),
         const SizedBox(
           height: 20,

@@ -340,6 +340,10 @@ class _SongSelectPageState extends State<SongSelectPage> {
               ),
             ),
           ),
+          const SizedBox(
+            width: 30,
+            height: 30,
+          ),
         ],
       ),
     );

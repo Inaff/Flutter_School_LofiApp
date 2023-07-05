@@ -26,7 +26,7 @@ class _IntroScreenOnboradState extends State<IntroScreenOnborad> {
       title: 'Immerse Yourself in Relaxing Melodies',
       titleTextStyle: const TextStyle(
         color: Colors.teal,
-        fontSize: 18,
+        fontSize: 17,
       ),
       subTitleTextStyle: const TextStyle(
         fontSize: 15,

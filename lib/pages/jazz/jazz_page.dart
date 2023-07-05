@@ -185,7 +185,6 @@ class _HomePageState extends State<Jazz_Page> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(40, 15, 40, 10),
                         child: Container(
-                          // height: 300,
                           decoration: BoxDecoration(
                             border:
                                 Border.all(color: Colors.pinkAccent, width: 2),
@@ -231,83 +230,100 @@ class _HomePageState extends State<Jazz_Page> {
                         ),
                       ),
                     ),
-
+                    const SizedBox(
+                      width: 10,
+                      height: 10,
+                    ),
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 0),
                         child: Column(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                IconButton(
-                                  icon: isMuted
-                                      ? const Icon(
-                                          Icons.volume_off,
-                                          color: Colors.pinkAccent,
-                                        )
-                                      : Icon(
-                                          Icons.volume_up,
-                                          color: Colors.blueGrey[50],
-                                        ),
-                                  onPressed: toggleMute,
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  top:
+                                      BorderSide(width: 2, color: Colors.white),
+                                  bottom:
+                                      BorderSide(width: 2, color: Colors.white),
                                 ),
-                                Expanded(
-                                  child: Slider(
-                                    value: volume,
-                                    min: 0.0,
-                                    max: 1.0,
-                                    onChanged: (value) {
-                                      changeVolume(value);
-                                    },
-                                    activeColor: Colors.pinkAccent,
-                                    inactiveColor: Colors.blueGrey[50],
+                                color: Colors.pinkAccent,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  IconButton(
+                                    icon: isMuted
+                                        ? const Icon(
+                                            Icons.volume_off,
+                                            color: Colors.tealAccent,
+                                          )
+                                        : const Icon(
+                                            Icons.volume_up,
+                                            color: Colors.white,
+                                          ),
+                                    onPressed: toggleMute,
                                   ),
-                                ),
-                                IconButton(
-                                  icon: limitPrevious
-                                      ? const Icon(
-                                          Icons.skip_previous,
-                                          color: Colors.pinkAccent,
-                                        )
-                                      : const Icon(
-                                          Icons.skip_previous,
-                                          color: Colors.greenAccent,
-                                        ),
-                                  onPressed: playPreviousSong,
-                                ),
-                                IconButton(
-                                  icon: isPlaying
-                                      ? Icon(
-                                          Icons.pause,
-                                          color: Colors.blueGrey[50],
-                                        )
-                                      : const Icon(
-                                          Icons.play_arrow,
-                                          color: Colors.pinkAccent,
-                                        ),
-                                  onPressed: () {
-                                    if (isPlaying) {
-                                      stopRadioStream();
-                                    } else {
-                                      playRadioStream(songs[currentSongIndex]);
-                                    }
-                                  },
-                                ),
-                                IconButton(
-                                  icon: limitNext
-                                      ? const Icon(
-                                          Icons.skip_next,
-                                          color: Colors.pinkAccent,
-                                        )
-                                      : const Icon(
-                                          Icons.skip_next,
-                                          color: Colors.greenAccent,
-                                        ),
-                                  onPressed: playNextSong,
-                                ),
-                              ],
+                                  Expanded(
+                                    child: Slider(
+                                      value: volume,
+                                      min: 0.0,
+                                      max: 1.0,
+                                      onChanged: (value) {
+                                        changeVolume(value);
+                                      },
+                                      activeColor: Colors.white,
+                                      inactiveColor: Colors.white30,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: limitPrevious
+                                        ? const Icon(
+                                            Icons.skip_previous,
+                                            color: Colors.white38,
+                                          )
+                                        : const Icon(
+                                            Icons.skip_previous,
+                                            color: Colors.white,
+                                          ),
+                                    onPressed: playPreviousSong,
+                                  ),
+                                  IconButton(
+                                    icon: isPlaying
+                                        ? const Icon(
+                                            Icons.pause,
+                                            color: Colors.white,
+                                          )
+                                        : const Icon(
+                                            Icons.play_arrow,
+                                            color: Colors.tealAccent,
+                                          ),
+                                    onPressed: () {
+                                      if (isPlaying) {
+                                        stopRadioStream();
+                                      } else {
+                                        playRadioStream(
+                                            songs[currentSongIndex]);
+                                      }
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: limitNext
+                                        ? const Icon(
+                                            Icons.skip_next,
+                                            color: Colors.white38,
+                                          )
+                                        : const Icon(
+                                            Icons.skip_next,
+                                            color: Colors.white,
+                                          ),
+                                    onPressed: playNextSong,
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -324,7 +340,7 @@ class _HomePageState extends State<Jazz_Page> {
                       thumbVisibility: true,
                       // thumbVisibility: true, //always show scrollbar
                       thickness: 5, //width of scrollbar
-                      thumbColor: Colors.tealAccent,
+                      thumbColor: Colors.white,
                       radius: Radius.circular(20), //corner radius of scrollbar
                       scrollbarOrientation: ScrollbarOrientation
                           .right, //which side to show scrollbar
