@@ -112,7 +112,14 @@ class _SongSelectPageState extends State<SongSelectPage> {
                   Expanded(
                     flex: 5,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        // Navigate to the next page here
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Jazz_Page()),
+                        );
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           border:
@@ -206,7 +213,14 @@ class _SongSelectPageState extends State<SongSelectPage> {
                   Expanded(
                     flex: 5,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        // Navigate to the next page here
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Jazz_Page()),
+                        );
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           border:
@@ -300,7 +314,14 @@ class _SongSelectPageState extends State<SongSelectPage> {
                   Expanded(
                     flex: 5,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        // Navigate to the next page here
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Jazz_Page()),
+                        );
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           border:
